@@ -1,7 +1,9 @@
-# 環境構築
-* [cgroup v2 (保留)](cgroupv2.md)
-* [Ubuntu-22.04 on WSL 環境構築](wsl-ubuntu.md)
-* [docker (rootless mode) 手動インストール](docker_rootless-mode.md)
-* [NVIDIA Container Toolkit インストール](nvidia-container-toolkit.md)
----
-[top](../README.md)
+#!/bin/bash
+
+mkdir -p build_check
+cd build_check
+
+INPUT_FILE=/data/examples/melt/in.melt
+
+# GPU + OpenMPI + OpenMP(not package)
+mpirun --allow-run-as-root -x OMP_NUM_THREADS=1 -np 6 lmp -sf gpu -in $INPUT_FILE
