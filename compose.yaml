@@ -1,0 +1,23 @@
+services:
+  lammps:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CUDA_TAG: 12.2.2-devel-ubuntu22.04
+    container_name: docker-lammps
+    restart: always
+    environment:
+      LD_LIBRARY_PATH: /usr/local/lib:/usr/local/cuda/lib64
+    volumes:
+      - ./data:/data
+    logging:
+      options:
+        max-size: '200k'
+        max-file: '10'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
